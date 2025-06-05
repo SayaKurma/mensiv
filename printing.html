@@ -482,6 +482,14 @@ document.getElementById('btn-selanjutnya').addEventListener('click', () => {
 console.log('Navigating to game...');
 });
 
+document.getElementById('btn-kembali').addEventListener('click', () => {
+    window.location.href = 'photobox.html'; // Ganti dengan URL halaman sebelumnya
+});
+
+document.getElementById('btn-selanjutnya').addEventListener('click', () => {
+    window.location.href = 'game.html'; // Ganti dengan URL halaman game atau halaman selanjutnya
+});
+
 requestAnimationFrame(animateProgress);
 </script>
 </body>
