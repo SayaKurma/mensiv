@@ -48,7 +48,7 @@
         .tear-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -70,6 +70,7 @@
             transform-style: preserve-3d;
             border: 2px solid #f4a261;
             backdrop-filter: blur(10px);
+            overflow-y: auto;
         }
 
         .letter::before {
@@ -129,7 +130,6 @@
         }
 
         .typewriter {
-            overflow: hidden;
             white-space: pre-wrap;
             border-right: 3px solid #f4a261;
             letter-spacing: 0.5px;
@@ -137,34 +137,56 @@
             line-height: 2;
             color: #6b5b5b;
             text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            min-height: 200px;
         }
 
-        .btn-next {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+        .btn {
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
             color: white;
             transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 15px rgba(238, 90, 111, 0.3);
-        }
-
-        .btn-next:hover {
-            background: linear-gradient(45deg, #ee5a6f, #e91e63);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(238, 90, 111, 0.4);
+            overflow: hidden;
         }
 
         .btn-back {
-            background: linear-gradient(45deg, #a8a8a8, #9e9e9e);
-            color: white;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 15px rgba(158, 158, 158, 0.3);
+            background: linear-gradient(45deg, #a8a8a8, #d1d1d1);
+            box-shadow: 0 4px 15px rgba(168, 168, 168, 0.3);
+        }
+
+        .btn-next {
+            background: linear-gradient(45deg, #ff8a9b, #ffccd5);
+            box-shadow: 0 4px 15px rgba(255, 138, 155, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-back:hover {
-            background: linear-gradient(45deg, #9e9e9e, #8e8e8e);
+            background: linear-gradient(45deg, #9e9e9e, #c0c0c0);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(158, 158, 158, 0.4);
+        }
+
+        .btn-next:hover {
+            background: linear-gradient(45deg, #ff6b6b, #ffb3bf);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
 
         .signature {
@@ -194,6 +216,10 @@
             .typewriter {
                 font-size: 1rem;
             }
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -219,12 +245,8 @@
                 </div>
                 
                 <div class="flex justify-between mt-16">
-                    <button class="btn-back px-8 py-3 rounded-full text-sm font-medium" id="btn-back">
-                        ← Kembali
-                    </button>
-                    <button class="btn-next px-8 py-3 rounded-full text-sm font-medium" id="btn-next">
-                        Selanjutnya →
-                    </button>
+                    <a href="ucapan.html" class="btn btn-back" id="btn-back">← Kembali</a>
+                    <a href="photobox.html" class="btn btn-next" id="btn-next">Selanjutnya →</a>
                 </div>
             </div>
         </div>
@@ -261,9 +283,9 @@
 
 Di setiap kata yang aku tulis ini, ada ribuan rasa yang ingin aku ungkapkan. Terima kasih telah menjadi bagian dari hidupku, untuk setiap tawa, setiap air mata, dan setiap momen yang kita lalui bersama.
 
-Kau adalah cahaya di hari-hariku yang kelam, pelangi setelah hujan, dan alasan mengapa aku tersenyum. Jika surat ini bisa berbicara, ia akan berteriak betapa beruntungnya aku memiliki seseorang sepertimu dalam hidupku.
+Kamu adalah cahaya di hari-hariku yang kelam, pelangi setelah hujan, dan alasan mengapa aku tersenyum. Jika surat ini bisa berbicara, ia akan berteriak betapa beruntungnya aku memiliki seseorang sepertimu dalam hidupku.
 
-Kita mungkin tidak tahu apa yang akan terjadi esok, tapi satu hal yang pasti: aku ingin kamu tahu betapa aku menghargai kehadiranmu. Terima kasih untuk menjadi dirimu sendiri.`;
+Kita mungkin tidak tahu apa yang akan terjadi esok, tapi satu hal yang pasti: aku ingin kamu tahu bahwa dirimu termasuk salah satu anugerah yang kusyukuri. Terima kasih telah menjadi dirimu sendiri.`;
 
             // Start the animation sequence
             setTimeout(() => {
@@ -281,7 +303,7 @@ Kita mungkin tidak tahu apa yang akan terjadi esok, tapi satu hal yang pasti: ak
                     
                     // Start typewriter effect
                     typeWriter(typewriterText, message, 0);
-                }, 2000);
+                }, 3000);
             }, 1000);
 
             // Enhanced typewriter effect
@@ -292,36 +314,29 @@ Kita mungkin tidak tahu apa yang akan terjadi esok, tapi satu hal yang pasti: ak
                 } else {
                     element.style.borderRight = 'none';
                     // Enable buttons when typing is complete
-                    btnNext.disabled = false;
-                    btnBack.disabled = false;
+                    btnNext.classList.remove('pointer-events-none', 'opacity-50');
+                    btnBack.classList.remove('pointer-events-none', 'opacity-50');
                     
                     // Add a subtle glow effect when complete
                     element.style.textShadow = '0 0 10px rgba(255, 107, 107, 0.3)';
                 }
             }
 
-            // Button functionality with navigation
-            btnNext.addEventListener('click', () => {
-                // Smooth transition to next page
-                document.body.style.transition = 'opacity 0.5s ease-out';
-                document.body.style.opacity = '0';
-                setTimeout(() => {
-                    window.location.href = 'photobox.html';
-                }, 500);
-            });
-
-            btnBack.addEventListener('click', () => {
-                // Smooth transition to previous page
-                document.body.style.transition = 'opacity 0.5s ease-out';
-                document.body.style.opacity = '0';
-                setTimeout(() => {
-                    window.history.back();
-                }, 500);
+            // Smooth transition for hyperlinks
+            [btnNext, btnBack].forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.body.style.transition = 'opacity 0.5s ease-out';
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = btn.href;
+                    }, 500);
+                });
             });
 
             // Initially disable buttons
-            btnNext.disabled = true;
-            btnBack.disabled = true;
+            btnNext.classList.add('pointer-events-none', 'opacity-50');
+            btnBack.classList.add('pointer-events-none', 'opacity-50');
         });
     </script>
 </body>
