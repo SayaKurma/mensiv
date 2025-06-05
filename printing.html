@@ -418,7 +418,7 @@ button {
 <div class="container" aria-label="Frame with photo and laser animation">
 <div class="photo-wrapper">
 <img
-src=https://media.discordapp.net/attachments/1371061895842500688/1380228129133691032/IMG_20250301_055453_232.jpg?ex=68431d1d&is=6841cb9d&hm=d7d276605237994995faa9badeededb74a42e6d00b587b85e4bafc47a343a3ee&=&width=454&height=806?auto=format&fit=crop&w=800&q=80"
+src="https://media.discordapp.net/attachments/1371061895842500688/1380228129133691032/IMG_20250301_055453_232.jpg?ex=68431d1d&is=6841cb9d&hm=d7d276605237994995faa9badeededb74a42e6d00b587b85e4bafc47a343a3ee&=&width=454&height=806?auto=format&fit=crop&w=800&q=80"
 alt="Foto Kenangan"
 />
 <div class="curtain" aria-hidden="true"></div>
@@ -488,6 +488,12 @@ document.getElementById('btn-kembali').addEventListener('click', () => {
 
 document.getElementById('btn-selanjutnya').addEventListener('click', () => {
     window.location.href = 'game.html'; // Ganti dengan URL halaman game atau halaman selanjutnya
+});
+
+// dilarang unduh gambar
+document.querySelector('.photo-wrapper img').addEventListener('click', function(e) {
+    e.preventDefault();
+    return false;
 });
 
 requestAnimationFrame(animateProgress);
