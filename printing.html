@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>💕 Mencetak Foto Kenangan - Romantic Edition</title>
+<style>
+:root {
+--frame-color: #d946ef;
+--background-primary: #0f0518;
+--background-secondary: #1a0b2e;
+--text-color: #fdf2f8;
+--accent-color: #ec4899;
+--secondary-accent: #f472b6;
+--laser-color: #f97316;
+--button-bg: linear-gradient(135deg, #ec4899, #be185d);
+--button-hover-bg: linear-gradient(135deg, #be185d, #9d174d);
+--button-text-color: #fdf2f8;
+--frame-padding: 16px;
+--font-family: 'Segoe UI', 'Georgia', serif;
+--shadow-pink: 0 0 30px rgba(236, 72, 153, 0.3);
+--shadow-orange: 0 0 20px rgba(249, 115, 22, 0.4);
+}
+
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+min-height: 100vh;
+background: radial-gradient(ellipse at top, var(--background-secondary), var(--background-primary));
+background-attachment: fixed;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+font-family: var(--font-family);
+color: var(--text-color);
+overflow-x: hidden;
+padding: 20px;
+position: relative;
+}
+
+body::before {
+content: '';
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: 
+  radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+  radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+  radial-gradient(circle at 40% 40%, rgba(190, 24, 93, 0.05) 0%, transparent 50%);
+pointer-events: none;
+z-index: -1;
+}
+
+.floating-hearts {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+overflow: hidden;
+z-index: 1;
+}
+
+.heart {
+position: absolute;
+color: var(--accent-color);
+opacity: 0.3;
+animation: float 6s ease-in-out infinite;
+font-size: 1.2rem;
+}
+
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { left: 20%; animation-delay: 1s; }
+.heart:nth-child(3) { left: 30%; animation-delay: 2s; }
+.heart:nth-child(4) { left: 70%; animation-delay: 0.5s; }
+.heart:nth-child(5) { left: 80%; animation-delay: 1.5s; }
+.heart:nth-child(6) { left: 90%; animation-delay: 2.5s; }
+
+@keyframes float {
+0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+10% { opacity: 0.3; }
+90% { opacity: 0.1; }
+50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+}
+
+.container {
+position: relative;
+width: 340px;
+height: 480px;
+background: linear-gradient(145deg, #2a1435, #1a0b2e);
+border: 4px solid transparent;
+background-clip: padding-box;
+border-radius: 20px;
+box-shadow: 
+  var(--shadow-pink),
+  inset 0 0 20px rgba(236, 72, 153, 0.1),
+  0 0 60px rgba(190, 24, 93, 0.2);
+overflow: hidden;
+z-index: 10;
+}
+
+.container::before {
+content: '';
+position: absolute;
+top: -4px;
+left: -4px;
+right: -4px;
+bottom: -4px;
+background: linear-gradient(45deg, #ec4899, #f472b6, #be185d, #ec4899);
+border-radius: 20px;
+z-index: -1;
+animation: borderGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+0% { opacity: 0.7; }
+100% { opacity: 1; }
+}
+
+.photo-wrapper {
+position: relative;
+width: 100%;
+height: 100%;
+border-radius: 16px;
+overflow: hidden;
+user-select: none;
+background: #000;
+}
+
+.photo-wrapper img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+pointer-events: none;
+filter: 
+  drop-shadow(0 0 10px var(--accent-color))
+  sepia(0.1)
+  saturate(1.1);
+}
+
+.curtain {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(to bottom, #000 0%, #1a0b2e 100%);
+z-index: 15;
+box-shadow: inset 0 0 30px #000;
+pointer-events: none;
+animation: curtainSlideDown 6s ease-out forwards;
+}
+
+.laser {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 4px;
+background: linear-gradient(
+  to right,
+  transparent,
+  var(--laser-color) 20%,
+  #fbbf24 50%,
+  var(--laser-color) 80%,
+  transparent
+);
+filter: drop-shadow(0 0 15px var(--laser-color));
+animation: laserDrop 6s ease-out forwards;
+pointer-events: none;
+mix-blend-mode: screen;
+border-radius: 2px;
+z-index: 20;
+box-shadow: var(--shadow-orange);
+}
+
+.info {
+margin-top: 30px;
+text-align: center;
+width: 340px;
+z-index: 10;
+position: relative;
+}
+
+.info h1 {
+font-weight: 700;
+font-size: 2.2rem;
+letter-spacing: 0.05em;
+margin-bottom: 15px;
+background: linear-gradient(135deg, var(--accent-color), var(--secondary-accent));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+position: relative;
+}
+
+.info h1::before {
+content: '💕';
+position: absolute;
+left: -40px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 1.5rem;
+animation: heartbeat 2s ease-in-out infinite;
+}
+
+.info h1::after {
+content: '💕';
+position: absolute;
+right: -40px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 1.5rem;
+animation: heartbeat 2s ease-in-out infinite 1s;
+}
+
+@keyframes heartbeat {
+0%, 100% { transform: translateY(-50%) scale(1); }
+50% { transform: translateY(-50%) scale(1.2); }
+}
+
+.progress-bar {
+position: relative;
+width: 100%;
+height: 16px;
+background: linear-gradient(135deg, #1a0b2e, #2a1435);
+border-radius: 20px;
+overflow: hidden;
+box-shadow: 
+  inset 0 0 10px rgba(0, 0, 0, 0.5),
+  0 0 20px rgba(236, 72, 153, 0.2);
+margin: 0 auto 15px;
+border: 2px solid rgba(236, 72, 153, 0.3);
+}
+
+.progress-bar-fill {
+height: 100%;
+width: 0;
+background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent), #f97316);
+border-radius: 20px;
+box-shadow: 
+  0 0 15px var(--accent-color),
+  inset 0 0 10px rgba(255, 255, 255, 0.2);
+transition: width 0.3s ease-out;
+position: relative;
+overflow: hidden;
+}
+
+.progress-bar-fill::after {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.4),
+  transparent
+);
+animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+0% { left: -100%; }
+100% { left: 100%; }
+}
+
+.progress-text {
+margin-top: 10px;
+font-weight: 600;
+font-size: 1.1rem;
+letter-spacing: 0.02em;
+background: linear-gradient(135deg, var(--accent-color), var(--secondary-accent));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+font-family: 'Segoe UI', monospace;
+}
+
+.buttons {
+margin-top: 25px;
+display: flex;
+justify-content: center;
+gap: 25px;
+}
+
+button {
+background: var(--button-bg);
+color: var(--button-text-color);
+border: none;
+border-radius: 25px;
+padding: 12px 28px;
+font-weight: 600;
+font-size: 1rem;
+cursor: pointer;
+box-shadow: 
+  0 0 20px rgba(236, 72, 153, 0.4),
+  0 4px 15px rgba(0, 0, 0, 0.3);
+transition: all 0.3s ease;
+user-select: none;
+position: relative;
+overflow: hidden;
+letter-spacing: 0.5px;
+}
+
+button::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.2),
+  transparent
+);
+transition: left 0.5s;
+}
+
+button:hover::before {
+left: 100%;
+}
+
+button:hover,
+button:focus {
+background: var(--button-hover-bg);
+box-shadow: 
+  0 0 30px rgba(236, 72, 153, 0.6),
+  0 6px 20px rgba(0, 0, 0, 0.4);
+transform: translateY(-2px);
+outline: none;
+}
+
+button:active {
+transform: translateY(0) scale(0.98);
+}
+
+@keyframes curtainSlideDown {
+0% {
+  top: 0;
+  opacity: 1;
+}
+100% {
+  top: 100%;
+  opacity: 0.8;
+}
+}
+
+@keyframes laserDrop {
+0% {
+  top: 0;
+  opacity: 1;
+  box-shadow: var(--shadow-orange);
+}
+100% {
+  top: calc(100% - 4px);
+  opacity: 0.9;
+  box-shadow: var(--shadow-orange);
+}
+}
+
+@media (max-width: 480px) {
+.container {
+  width: 90vw;
+  max-width: 320px;
+  height: 420px;
+}
+
+.info {
+  width: 90vw;
+  max-width: 320px;
+}
+
+.info h1 {
+  font-size: 1.8rem;
+}
+
+.info h1::before,
+.info h1::after {
+  font-size: 1.2rem;
+}
+
+.buttons {
+  gap: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+}
+</style>
+</head>
+<body>
+<div class="floating-hearts">
+<div class="heart">💖</div>
+<div class="heart">💕</div>
+<div class="heart">💗</div>
+<div class="heart">💖</div>
+<div class="heart">💕</div>
+<div class="heart">💗</div>
+</div>
+
+<div class="container" aria-label="Frame with photo and laser animation">
+<div class="photo-wrapper">
+<img
+src=https://media.discordapp.net/attachments/1371061895842500688/1380228129133691032/IMG_20250301_055453_232.jpg?ex=68431d1d&is=6841cb9d&hm=d7d276605237994995faa9badeededb74a42e6d00b587b85e4bafc47a343a3ee&=&width=454&height=806?auto=format&fit=crop&w=800&q=80"
+alt="Foto Kenangan"
+/>
+<div class="curtain" aria-hidden="true"></div>
+<div class="laser" aria-hidden="true"></div>
+</div>
+</div>
+
+<div class="info" role="region" aria-live="polite" aria-atomic="true">
+<h1>AMELIA BUTUT</h1>
+<div
+class="progress-bar"
+role="progressbar"
+aria-valuemin="0"
+aria-valuemax="100"
+aria-valuenow="0"
+>
+<div class="progress-bar-fill"></div>
+</div>
+<div class="progress-text">Proses: 0%</div>
+<div class="buttons">
+<button type="button" id="btn-kembali">❮ kembali</button>
+<button type="button" id="btn-selanjutnya">selanjutnya ❯</button>
+</div>
+</div>
+
+<script>
+const duration = 6000;
+const progressBarFill = document.querySelector(".progress-bar-fill");
+const progressText = document.querySelector(".progress-text");
+const progressBar = document.querySelector(".progress-bar");
+let start = null;
+
+function animateProgress(timestamp) {
+if (!start) start = timestamp;
+const elapsed = timestamp - start;
+const percent = Math.min(Math.floor((elapsed / duration) * 100), 100);
+
+progressBarFill.style.width = percent + "%";
+progressText.textContent = "Proses: " + percent + "%";
+progressBar.setAttribute("aria-valuenow", percent);
+
+if (percent < 100) {
+requestAnimationFrame(animateProgress);
+} else {
+// Add completion sparkle effect
+progressBarFill.style.boxShadow = `
+  0 0 30px var(--accent-color),
+  inset 0 0 15px rgba(255, 255, 255, 0.3)
+`;
+}
+}
+
+// Add button click handlers for navigation
+document.getElementById('btn-kembali').addEventListener('click', () => {
+// Navigate to previous page or section
+console.log('Navigating back...');
+});
+
+document.getElementById('btn-selanjutnya').addEventListener('click', () => {
+// Navigate to next page (the game)
+console.log('Navigating to game...');
+});
+
+requestAnimationFrame(animateProgress);
+</script>
+</body>
+</html>
