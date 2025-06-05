@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Mensiv</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-pink: #ff6b9d;
+            --secondary-pink: #ffc3d0;
+            --gold: #ffd700;
+            --rose-gold: #e8a87c;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow-x: hidden;
+            user-select: none;
+            position: relative;
+        }
+        
+        /* Romantic background animation */
+        .romantic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 157, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 195, 208, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.2) 0%, transparent 50%);
+            animation: backgroundShift 10s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            background: linear-gradient(45deg, #ff6b9d, #ffd700, #ff6b9d);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite, popIn 1s ease forwards;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.5));
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .love-message {
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        button#start-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border: none;
+            background: linear-gradient(45deg, var(--primary-pink), var(--rose-gold));
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+            animation: bounceIn 1s ease 1s both;
+        }
+        
+        button#start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        button#start-btn:hover::before {
+            left: 100%;
+        }
+        
+        button#start-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.6);
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Confetti styles */
+        #confetti-container {
+            position: fixed;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            z-index: 5;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            opacity: 0.9;
+            transform-origin: center;
+            will-change: transform, opacity;
+            border-radius: 50%;
+            animation-timing-function: ease-out;
+        }
+        
+        .heart-confetti {
+            font-size: 16px;
+            width: auto;
+            height: auto;
+        }
+        
+        /* Floating decorations */
+        .decoration {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: floatAround 15s infinite linear;
+        }
+        
+        @keyframes floatAround {
+            0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+        }
+        
+        .decoration:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .decoration:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .decoration:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
+        .decoration:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 6s; }
+    </style>
+</head>
+<body>
+    <div class="romantic-bg"></div>
+    
+    <!-- Floating decorations -->
+    <div class="decoration">💕</div>
+    <div class="decoration">🌹</div>
+    <div class="decoration">💖</div>
+    <div class="decoration">✨</div>
+    
+    <div class="container">
+        <h1>Happy Mensiv, Umiku Sayang! 💕</h1>
+        <button id="start-btn">Wofyu🍂</button>
+    </div>
+    
+    <div id="confetti-container"></div>
+
+    <script>
+        const confettiContainer = document.getElementById('confetti-container');
+        const romanticColors = ['#ff6b9d', '#ffc3d0', '#ffd700', '#ff8fab', '#e8a87c', '#ff6b6b'];
+        const heartShapes = ['💕', '💖', '💝', '🌹', '✨', '💗'];
+        
+        let confettiCount = 120;
+        let confettiPieces = [];
+        
+        function createConfettiPiece() {
+            const confetti = document.createElement('div');
+            const isHeart = Math.random() > 0.6;
+            
+            if (isHeart) {
+                confetti.classList.add('confetti', 'heart-confetti');
+                confetti.innerHTML = heartShapes[Math.floor(Math.random() * heartShapes.length)];
+            } else {
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = romanticColors[Math.floor(Math.random() * romanticColors.length)];
+            }
+            
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.top = -20 + 'px';
+            
+            const size = isHeart ? 1 : (8 + Math.random() * 6);
+            if (!isHeart) {
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+            }
+            
+            confetti.style.opacity = 0.8 + Math.random() * 0.2;
+            confettiContainer.appendChild(confetti);
+            
+            return {
+                el: confetti,
+                x: parseFloat(confetti.style.left),
+                y: -20,
+                rotation: Math.random() * 360,
+                rotationSpeed: (Math.random() - 0.5) * 15,
+                speed: 1.5 + Math.random() * 2.5,
+                drift: (Math.random() - 0.5) * 1.2,
+                isHeart: isHeart
+            };
+        }
+        
+        function resetConfettiPiece(piece) {
+            piece.x = Math.random() * window.innerWidth;
+            piece.y = -20;
+            piece.rotation = Math.random() * 360;
+            piece.rotationSpeed = (Math.random() - 0.5) * 15;
+            piece.speed = 1.5 + Math.random() * 2.5;
+            piece.drift = (Math.random() - 0.5) * 1.2;
+            piece.el.style.left = piece.x + 'px';
+            piece.el.style.top = piece.y + 'px';
+            piece.el.style.opacity = piece.isHeart ? 0.9 : 0.8 + Math.random() * 0.2;
+        }
+        
+        function updateConfetti() {
+            confettiPieces.forEach(piece => {
+                piece.x += piece.drift;
+                piece.y += piece.speed;
+                piece.rotation += piece.rotationSpeed;
+                
+                if (piece.y > window.innerHeight + 50) {
+                    resetConfettiPiece(piece);
+                }
+                
+                piece.el.style.transform = `translate(${piece.x}px, ${piece.y}px) rotate(${piece.rotation}deg)`;
+            });
+            
+            requestAnimationFrame(updateConfetti);
+        }
+        
+        function startConfetti() {
+            confettiContainer.innerHTML = '';
+            confettiPieces = [];
+            
+            for (let i = 0; i < confettiCount; i++) {
+                confettiPieces.push(createConfettiPiece());
+            }
+            
+            updateConfetti();
+        }
+        
+        document.getElementById('start-btn').addEventListener('click', () => {
+            // Add click effect
+            const btn = document.getElementById('start-btn');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = '';
+                // Navigate to next page
+                window.location.href = '#surat';
+            }, 150);
+        });
+        
+        // Start confetti on page load
+        window.onload = () => {
+            startConfetti();
+        };
+    </script>
+</body>
+</html>
